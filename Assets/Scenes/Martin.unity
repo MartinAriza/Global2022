@@ -173,8 +173,8 @@ MonoBehaviour:
   rightEngine: 1
   rotationSpeed: 1
   thrustSpeed: 60
-  torque: 10
-  torqueAngleThreshold: 200
+  torque: 100
+  minTorqueApplied: 0.2
 --- !u!96 &216444994
 TrailRenderer:
   serializedVersion: 2
@@ -594,8 +594,8 @@ MonoBehaviour:
   rightEngine: 0
   rotationSpeed: 1
   thrustSpeed: 60
-  torque: 10
-  torqueAngleThreshold: 110
+  torque: 100
+  minTorqueApplied: 0.2
 --- !u!96 &1346191223
 TrailRenderer:
   serializedVersion: 2
@@ -802,7 +802,6 @@ GameObject:
   - component: {fileID: 1877829856}
   - component: {fileID: 1877829859}
   - component: {fileID: 1877829855}
-  - component: {fileID: 1877829860}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -904,18 +903,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1877829860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877829854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 968b618eb2dffb843aae9e91fd4e3c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftEngine: {fileID: 1346191222}
-  rightEngine: {fileID: 216444993}
-  torqueForce: 10

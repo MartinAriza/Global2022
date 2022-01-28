@@ -7,8 +7,8 @@ public class ShipEngine : MonoBehaviour
     #region Ship Parts
     [SerializeField] Rigidbody shipBody;
 
-    [SerializeField] bool leftEngine = false;
-    [SerializeField] bool rightEngine = true;
+    [SerializeField] [Tooltip("Activar si es el motor izquierdo")] bool leftEngine = false;
+    [SerializeField] [Tooltip("Activar si es el motor derecho")]  bool rightEngine = true;
     #endregion
 
 
@@ -21,9 +21,10 @@ public class ShipEngine : MonoBehaviour
 
 
     #region Movement variables
-    [SerializeField] float rotationSpeed = 3f;
-    [SerializeField] float thrustSpeed = 10f;
-    [SerializeField] float torque = 10f;
+    [SerializeField] [Tooltip("Velocidad a la que rota el motor")] float rotationSpeed = 3f;
+    [SerializeField] [Tooltip("Velocidad lineal que aplica el motor")] float thrustSpeed = 10f;
+    [SerializeField] [Tooltip("Torque que aplica el motor")] float torque = 10f;
+    [SerializeField] [Range(0f, 1f)] [Tooltip("Porcentaje de torque mínimo que se aplica cuando el motor está en vertical")] float minTorqueApplied = 0.2f;
     #endregion
 
     void Start()
@@ -57,24 +58,24 @@ public class ShipEngine : MonoBehaviour
 
             if (leftEngine)
             {
-                torqueMultiplier = Mathf.Abs(
+                torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
                     / 
                     (180f - 90f)) / (180f - 90f)) 
                     - 2f)
-                    );
+                    ) + minTorqueApplied);
 
                 shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
             }
 
             else if (rightEngine)
             {
-                torqueMultiplier = Mathf.Abs(
+                torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f) 
                     / 
                     (270f - 180f)) / (270f - 180f)) 
                     - 2f)
-                    );
+                    ) + minTorqueApplied);
 
                 shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
             }
