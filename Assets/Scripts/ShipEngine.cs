@@ -53,11 +53,32 @@ public class ShipEngine : MonoBehaviour
         {
             shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
 
-            if (leftEngine) //90, 180
-                shipBody.AddTorque(transform.forward * torque, ForceMode.Force);
+            float torqueMultiplier = 0f;
 
-            else if (rightEngine) //180, 270
-                shipBody.AddTorque(-transform.forward * torque, ForceMode.Force);
+            if (leftEngine)
+            {
+                torqueMultiplier = Mathf.Abs(
+                    ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
+                    / 
+                    (180f - 90f)) / (180f - 90f)) 
+                    - 2f)
+                    );
+
+                shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
+            }
+
+            else if (rightEngine)
+            {
+                torqueMultiplier = Mathf.Abs(
+                    ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f) 
+                    / 
+                    (270f - 180f)) / (270f - 180f)) 
+                    - 2f)
+                    );
+
+                shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
+            }
+                
         }
     }
 
