@@ -54,11 +54,16 @@ public class ShipEngine : MonoBehaviour
         {
             shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
 
-            if(leftEngine)
-                shipBody.AddTorque(transform.forward * torque, ForceMode.Force);
+            if(transform.localEulerAngles.y > torqueAngleThreshold)
+            {
+                if (leftEngine)
+                    shipBody.AddTorque(transform.forward * torque, ForceMode.Force);
 
-            else if(rightEngine)
-                shipBody.AddTorque(-transform.forward * torque, ForceMode.Force);
+                else if (rightEngine)
+                    shipBody.AddTorque(-transform.forward * torque, ForceMode.Force);
+            }
+
+            
         }
     }
 
