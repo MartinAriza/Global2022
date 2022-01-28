@@ -24,7 +24,6 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] float rotationSpeed = 3f;
     [SerializeField] float thrustSpeed = 10f;
     [SerializeField] float torque = 10f;
-    [SerializeField] float torqueAngleThreshold = 45f;
     #endregion
 
     void Start()
@@ -54,16 +53,11 @@ public class ShipEngine : MonoBehaviour
         {
             shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
 
-            if(transform.localEulerAngles.y > torqueAngleThreshold)
-            {
-                if (leftEngine)
-                    shipBody.AddTorque(transform.forward * torque, ForceMode.Force);
+            if (leftEngine) //90, 180
+                shipBody.AddTorque(transform.forward * torque, ForceMode.Force);
 
-                else if (rightEngine)
-                    shipBody.AddTorque(-transform.forward * torque, ForceMode.Force);
-            }
-
-            
+            else if (rightEngine) //180, 270
+                shipBody.AddTorque(-transform.forward * torque, ForceMode.Force);
         }
     }
 
