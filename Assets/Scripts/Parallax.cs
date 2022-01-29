@@ -33,6 +33,8 @@ public class Parallax : MonoBehaviour
 
         transform.position = new Vector3(spriteStartPosition.x + distance.x, spriteStartPosition.y + distance.y, transform.position.z);
 
+
+        //To DO Fix popping
         if (distanceFromCamera.x > spriteStartPosition.x + spriteSize.x) spriteStartPosition.x += spriteSize.x;
         else if (distanceFromCamera.x < spriteStartPosition.x - spriteSize.x) spriteStartPosition.x -= spriteSize.x;
 

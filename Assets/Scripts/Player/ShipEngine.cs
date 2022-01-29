@@ -140,5 +140,5 @@ public class ShipEngine : MonoBehaviour
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
 
-    //TO DO: Max angular and linear speed; Encender trails al hacer thrust; El hook se lanza cuando los dos motores pulsan el input
+    //TO DO: Max angular and linear speed; El hook se lanza cuando los dos motores pulsan el input
 }
