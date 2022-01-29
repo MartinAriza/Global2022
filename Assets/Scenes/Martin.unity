@@ -3629,8 +3629,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: maxVelocity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: rotationSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: maxAngularVelocity
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: brakeVelocitySmooothTime
@@ -3689,8 +3697,16 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: maxVelocity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: rotationSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: maxAngularVelocity
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: brakeVelocitySmooothTime

@@ -29,7 +29,9 @@ public class Parallax : MonoBehaviour
     {
         distanceFromCamera = new Vector2(camera.transform.position.x, camera.transform.position.y) * (1 - parallax);
 
-        distance = new Vector2(camera.transform.position.x, camera.transform.position.y) * parallax;
+        //distance = new Vector2(camera.transform.position.x, camera.transform.position.y) * parallax;
+
+        distance = new Vector2(transform.position.x - spriteStartPosition.x, transform.position.y - spriteStartPosition.y) * parallax;
 
         transform.position = new Vector3(spriteStartPosition.x + distance.x, spriteStartPosition.y + distance.y, transform.position.z);
 
