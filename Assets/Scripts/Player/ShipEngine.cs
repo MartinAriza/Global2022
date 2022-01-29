@@ -18,7 +18,8 @@ public class ShipEngine : MonoBehaviour
     float xAxis = 0f;
 
     bool thrustInput = false;
-    bool hookInput = false;
+    bool brakeInput = false;
+    bool brakeReleaseInput = false;
     #endregion
 
 
@@ -28,7 +29,11 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] [Tooltip("Torque que aplica el motor")] float torque = 10f;
     [SerializeField] [Range(0f, 1f)] [Tooltip("Porcentaje de torque mínimo que se aplica cuando el motor está en vertical")] float minTorqueApplied = 0.2f;
     [SerializeField] float trailFadeOut = 1f;
+    [SerializeField] float brakeVelocitySmooothTime = 0.4f;
+    [SerializeField] float brakeAngularVelocitySmoothTime = 0.4f;
     #endregion
+
+    bool firsFrameBrake = true;
 
     void Start()
     {
@@ -39,12 +44,11 @@ public class ShipEngine : MonoBehaviour
     {
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
-
-        
     }
 
     private void FixedUpdate()
     {
+        //Engine rotation
         if (leftEngine)
         {
             RotateEngine(90f, 180f);
@@ -55,46 +59,70 @@ public class ShipEngine : MonoBehaviour
             RotateEngine(180f, 270f);
         }
 
-        if (thrustInput)
+        if (brakeInput)
         {
-            shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
-
-            float torqueMultiplier = 0f;
-
-            if (leftEngine)
+            if(firsFrameBrake)
             {
-                leftEngineTrail.time = 1f;
-
-                torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
-                    ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
-                    / 
-                    (180f - 90f)) / (180f - 90f)) 
-                    - 2f)
-                    ) + minTorqueApplied);
-
-                shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
+                firsFrameBrake = false;
+                Debug.Log("asdads");
+                //Spawn animation
+                //SFX
             }
 
-            else if (rightEngine)
-            {
-                rightEngineTrail.time = 1f;
+            Vector3 velocity = Vector3.zero;
 
-                torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
-                    ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f) 
-                    / 
-                    (270f - 180f)) / (270f - 180f)) 
-                    - 2f)
-                    ) + minTorqueApplied);
+            shipBody.velocity = Vector3.SmoothDamp(shipBody.velocity, Vector3.zero, ref velocity, brakeVelocitySmooothTime);
 
-                shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
-            }
-                
+            shipBody.AddTorque(-shipBody.angularVelocity * brakeAngularVelocitySmoothTime);
+
+            if (leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
         }
         else
         {
-            if(leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
-            if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            //Thrust
+            if (thrustInput)
+            {
+                shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
+
+                float torqueMultiplier = 0f;
+
+                if (leftEngine)
+                {
+                    leftEngineTrail.time = 1f;
+
+                    torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
+                        ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
+                        /
+                        (180f - 90f)) / (180f - 90f))
+                        - 2f)
+                        ) + minTorqueApplied);
+
+                    shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
+                }
+
+                else if (rightEngine)
+                {
+                    rightEngineTrail.time = 1f;
+
+                    torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
+                        ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f)
+                        /
+                        (270f - 180f)) / (270f - 180f))
+                        - 2f)
+                        ) + minTorqueApplied);
+
+                    shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
+                }
+            }
+            else
+            {
+                if (leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+                if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            }
         }
+
+        if (brakeReleaseInput) firsFrameBrake = true;
     }
 
     #region Input Management
@@ -109,9 +137,9 @@ public class ShipEngine : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
             xAxis += 1;
 
-        thrustInput = Input.GetKey(KeyCode.S);
-        hookInput = Input.GetKey(KeyCode.W);
-
+        thrustInput = Input.GetKey(KeyCode.W);
+        brakeInput = Input.GetKey(KeyCode.Space);
+        brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
         //Left side Gamepad Input
     }
 
@@ -126,9 +154,9 @@ public class ShipEngine : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
             xAxis += 1;
 
-        thrustInput = Input.GetKey(KeyCode.DownArrow);
-        hookInput = Input.GetKey(KeyCode.UpArrow);
-
+        thrustInput = Input.GetKey(KeyCode.UpArrow);
+        //brakeInput = Input.GetKey(KeyCode.Space);
+        //brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
         //Right side Gamepad Input
     }
     #endregion

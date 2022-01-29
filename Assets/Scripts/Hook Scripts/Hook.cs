@@ -5,87 +5,85 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
-
     public int ropeLength = 10;
-    public int forwardPos = 1;
-    public GameObject ropePart;
 
-    Rigidbody rb;
-    //Vector3 fwd;
-    Vector3 ropePos;
-    GameObject first;
-    GameObject second;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] float attractionForceMultiplier = 4f;
+    [SerializeField] float releaseInertiaMultiplier = 4f;
+    [SerializeField] float releaseAngulaVelocityDivider = 2f;
+    LineRenderer lineRenderer;
 
-    Queue<GameObject> ropePool;
-    [SerializeField] GameObject ropeParent;
+    GameObject hookedGameObject = null;
+
+    bool firstFrameHook = true;
+    float firstFrameDistance = 0f;
+
+    RaycastHit hit;
 
     private void Start()
     {
-        ropePool = new Queue<GameObject>();
-
-        rb = GetComponent<Rigidbody>();
+        //ropePool = new Queue<GameObject>();
+        lineRenderer = rb.gameObject.GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-
         Debug.DrawLine(transform.position, transform.position + transform.forward * ropeLength, Color.green);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            //fwd = transform.TransformDirection(Vector3.forward);
-            ropePos = new Vector3(transform.position.x, transform.position.y, transform.position.z + forwardPos);
-
-            first = Instantiate(ropePart, ropePos, Quaternion.identity);
-
-            first.transform.SetParent(ropeParent.transform);
-
-            GetComponent<FixedJoint>().connectedBody = first.GetComponent<Rigidbody>();
-            ropePool.Enqueue(first);
-
             if (Physics.Raycast(transform.position, transform.forward, out hit, ropeLength))
             {
-                for(int i = 1; i < hit.distance; i++)
+                if(firstFrameHook)
                 {
-                    Vector3 newPos = new Vector3(ropePos.x, ropePos.y + i, ropePos.z);
-                    second = Instantiate(ropePart, newPos, Quaternion.identity);
-                    second.transform.SetParent(ropeParent.transform);
-
-                    first.GetComponent<FixedJoint>().connectedBody = second.GetComponent<Rigidbody>();
-                    first = second;
-                    ropePool.Enqueue(first);
+                    firstFrameHook = false;
+                    firstFrameDistance = hit.distance;
                 }
 
-                first.GetComponent<FixedJoint>().connectedBody = hit.collider.gameObject.GetComponent<Rigidbody>();
-
-            }
-            else
-            {
-                for (int i = 1; i < ropeLength; i++)
-                {
-                    Vector3 newPos = new Vector3(ropePos.x, ropePos.y + i, ropePos.z);
-                    second = Instantiate(ropePart, newPos, Quaternion.identity);
-                    second.transform.SetParent(ropeParent.transform);
-
-                    first.GetComponent<FixedJoint>().connectedBody = second.GetComponent<Rigidbody>();
-                    first = second;
-                    ropePool.Enqueue(first);
-                }
+                hookedGameObject = hit.collider.gameObject;
             }
         }
-
-        
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            while(ropePool.Count > 0)
-            {
-                GameObject go = ropePool.Dequeue();
-                Destroy(go);
-            }
-        }
+            hookedGameObject = null;
+            lineRenderer.SetVertexCount(0);
 
+            Vector3 direction = new Vector3(rb.velocity.x, rb.velocity.y, 0f);
+
+            Vector3 force = direction * releaseInertiaMultiplier;
+
+            rb.AddForce(force, ForceMode.Impulse);
+            rb.angularVelocity = rb.angularVelocity / releaseAngulaVelocityDivider;
+
+            firstFrameHook = true;
+            firstFrameDistance = 0f;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(hookedGameObject != null)
+        {
+            //Draw line between ship and hooked object
+            lineRenderer.SetVertexCount(2);
+
+            lineRenderer.SetPosition(0, rb.transform.position);
+            lineRenderer.SetPosition(1, hookedGameObject.transform.position);
+
+
+            //Set Distance
+            //Vector3 direction = (hookedGameObject.transform.position - rb.gameObject.transform.position).normalized;
+
+            Vector3 direction = (hookedGameObject.transform.position - rb.gameObject.transform.position).normalized;
+
+
+            rb.gameObject.transform.position = hookedGameObject.transform.position;
+            rb.gameObject.transform.position = rb.gameObject.transform.position - rb.gameObject.transform.forward * firstFrameDistance;
+
+            //Rotate ship towards hooked object
+            rb.gameObject.transform.rotation = Quaternion.LookRotation(-direction, Vector3.forward);
+        }
     }
 }
