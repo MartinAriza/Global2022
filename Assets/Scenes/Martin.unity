@@ -2268,7 +2268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1183357596
 Transform:
   m_ObjectHideFlags: 0
@@ -3596,6 +3596,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6070481333513794977, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070481333513794977, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: ropeLength
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070481333513794977, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: releaseInertiaMultiplier
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070481333513794977, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: attractionForceMultiplier
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6578070695083629080, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -3608,9 +3624,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6804152824315093264, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: rotationSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: brakeVelocitySmooothTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640744610890990, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: brakeAngularVelocitySmoothTime
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7084640744616153926, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: m_Name
@@ -3626,7 +3654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7084640744616153978, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.91
+      value: 9.42
       objectReference: {fileID: 0}
     - target: {fileID: 7084640744616153978, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3664,6 +3692,14 @@ PrefabInstance:
       propertyPath: rotationSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: brakeVelocitySmooothTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084640745202715609, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+      propertyPath: brakeAngularVelocitySmoothTime
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 7084640746133808787, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.7071068
@@ -3676,5 +3712,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6384802732299561005, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+    - {fileID: 6804152824315093264, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+    - {fileID: 816006592229467994, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
