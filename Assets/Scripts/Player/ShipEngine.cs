@@ -34,8 +34,6 @@ public class ShipEngine : MonoBehaviour
 
     void Update()
     {
-
-        //Prueba git
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
 
