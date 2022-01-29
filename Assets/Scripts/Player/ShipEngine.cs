@@ -8,6 +8,8 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] Rigidbody shipBody;
     [SerializeField] TrailRenderer leftEngineTrail;
     [SerializeField] TrailRenderer rightEngineTrail;
+    [SerializeField] GameObject brakeAnimSpawnPoint;
+    [SerializeField] GameObject brakeAnimPrefab;
     
     [SerializeField] [Tooltip("Activar si es el motor izquierdo")] bool leftEngine = false;
     [SerializeField] [Tooltip("Activar si es el motor derecho")]  bool rightEngine = true;
@@ -28,6 +30,10 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] [Tooltip("Velocidad lineal que aplica el motor")] float thrustSpeed = 10f;
     [SerializeField] [Tooltip("Torque que aplica el motor")] float torque = 10f;
     [SerializeField] [Range(0f, 1f)] [Tooltip("Porcentaje de torque mínimo que se aplica cuando el motor está en vertical")] float minTorqueApplied = 0.2f;
+
+    [SerializeField] float maxVelocity = 5f;
+    [SerializeField] float maxAngularVelocity = 2.5f;
+
     [SerializeField] float trailFadeOut = 1f;
     [SerializeField] float brakeVelocitySmooothTime = 0.4f;
     [SerializeField] float brakeAngularVelocitySmoothTime = 0.4f;
@@ -44,6 +50,23 @@ public class ShipEngine : MonoBehaviour
     {
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
+
+        if (brakeInput)
+        {
+            if (firsFrameBrake)
+            {
+                firsFrameBrake = false;
+
+                //Spawn animation
+                GameObject brakeAnim = Instantiate(brakeAnimPrefab, brakeAnimSpawnPoint.transform.position, Quaternion.Euler(0f, 0f, 0f));
+                brakeAnim.transform.rotation = Quaternion.LookRotation(shipBody.transform.up, -shipBody.transform.forward);
+                brakeAnim.GetComponent<Animator>().Play("Brakes");
+
+                //BrakeSFX
+            }
+        }
+
+        if (brakeReleaseInput) firsFrameBrake = true;
     }
 
     private void FixedUpdate()
@@ -61,29 +84,22 @@ public class ShipEngine : MonoBehaviour
 
         if (brakeInput)
         {
-            if(firsFrameBrake)
-            {
-                firsFrameBrake = false;
-                Debug.Log("asdads");
-                //Spawn animation
-                //SFX
-            }
-
             Vector3 velocity = Vector3.zero;
-
+   
             shipBody.velocity = Vector3.SmoothDamp(shipBody.velocity, Vector3.zero, ref velocity, brakeVelocitySmooothTime);
 
             shipBody.AddTorque(-shipBody.angularVelocity * brakeAngularVelocitySmoothTime);
 
-            if (leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
-            if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
         }
         else
         {
             //Thrust
             if (thrustInput)
             {
-                shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
+                if(shipBody.velocity.magnitude < maxVelocity)
+                    shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
 
                 float torqueMultiplier = 0f;
 
@@ -98,7 +114,9 @@ public class ShipEngine : MonoBehaviour
                         - 2f)
                         ) + minTorqueApplied);
 
-                    shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
+
+                    if (shipBody.angularVelocity.magnitude < maxAngularVelocity)
+                        shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
                 }
 
                 else if (rightEngine)
@@ -112,7 +130,8 @@ public class ShipEngine : MonoBehaviour
                         - 2f)
                         ) + minTorqueApplied);
 
-                    shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
+                    if (shipBody.angularVelocity.magnitude < maxAngularVelocity)
+                        shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
                 }
             }
             else
@@ -121,8 +140,6 @@ public class ShipEngine : MonoBehaviour
                 if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
             }
         }
-
-        if (brakeReleaseInput) firsFrameBrake = true;
     }
 
     #region Input Management
@@ -170,5 +187,5 @@ public class ShipEngine : MonoBehaviour
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
 
-    //TO DO: Max angular and linear speed; El hook se lanza cuando los dos motores pulsan el input
+    //TO DO: Max angular and linear speed
 }
