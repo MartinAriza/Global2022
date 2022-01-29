@@ -7,11 +7,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float offset = -80f;
 
-    [SerializeField] float smoothTimeInDeadzone = 1f;
-    [SerializeField] float rotationSpeed = 1f;
-
-    [SerializeField] Vector2 deadZoneX = new Vector2(0.25f, 0.75f);
-    [SerializeField] Vector2 deadZoneY = new Vector2(0.25f, 0.75f);
+    [SerializeField] float smoothTimeInDeadzone = 0.3f;
+    [SerializeField] float smoothRotation = 0.06f;
 
     private Vector3 velocity = Vector3.zero;
     private Camera playerCamera;
@@ -26,7 +23,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTimeInDeadzone);
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         Vector3 viewPos = playerCamera.WorldToViewportPoint(target.position);
 
@@ -35,11 +32,6 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTimeInDeadzone);
 
         //Rotation
-        //transform.up = Vector3.SmoothDamp(transform.up, -target.transform.forward, ref velocity, rotationSpeed);
-
-        transform.LookAt(target.position, -target.transform.forward);
-
-        //Debug.Log(target.rotation.eulerAngles.x);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, target.rotation.eulerAngles.x - 90), rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.forward, -target.transform.forward), smoothRotation);
     }
 }

@@ -960,9 +960,7 @@ MonoBehaviour:
   target: {fileID: 1040073563}
   offset: -18
   smoothTimeInDeadzone: 0.3
-  rotationSpeed: 1
-  deadZoneX: {x: 0.25, y: 0.75}
-  deadZoneY: {x: 0.25, y: 0.75}
+  smoothRotation: 0.06
 --- !u!1 &822558437
 GameObject:
   m_ObjectHideFlags: 0
