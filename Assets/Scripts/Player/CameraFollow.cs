@@ -5,13 +5,15 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] Transform target;
-    [SerializeField] float offset = -80f;
+    [SerializeField] float offset = -18f;
 
     [SerializeField] float smoothTimeInDeadzone = 0.3f;
     [SerializeField] float smoothRotation = 0.06f;
 
     private Vector3 velocity = Vector3.zero;
     private Camera playerCamera;
+
+
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTimeInDeadzone);
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         Vector3 viewPos = playerCamera.WorldToViewportPoint(target.position);
 
