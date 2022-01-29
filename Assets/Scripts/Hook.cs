@@ -21,11 +21,13 @@ public class Hook : MonoBehaviour
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Vector3 ropePos = new Vector3(transform.position.x + forwardPos, transform.position.y, transform.position.z);
-        
-        //Prueba movimiento
-        //int velMove = 10;
-        //float movX = Input.GetAxis("Horizontal");
-        //rb.velocity = new Vector3(movX * velMove, rb.velocity.y, 0);
+
+        //prueba movimiento
+        //int velmove = 10;
+        //float movx = Input.GetAxis("horizontal");
+        //rb.velocity = new Vector3(movx * velmove, rb.velocity.y, 0);
+
+        Debug.DrawRay(transform.position, transform.position + fwd * ropeLength, Color.green);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -41,6 +43,9 @@ public class Hook : MonoBehaviour
                     first.GetComponent<FixedJoint>().connectedBody = second.GetComponent<Rigidbody>();
                     first = second;
                 }
+
+                first.GetComponent<FixedJoint>().connectedBody = hit.collider.gameObject.GetComponent<Rigidbody>();
+
             }
 
             else
