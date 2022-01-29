@@ -6,7 +6,9 @@ public class ShipEngine : MonoBehaviour
 {
     #region Ship Parts
     [SerializeField] Rigidbody shipBody;
-
+    [SerializeField] TrailRenderer leftEngineTrail;
+    [SerializeField] TrailRenderer rightEngineTrail;
+    
     [SerializeField] [Tooltip("Activar si es el motor izquierdo")] bool leftEngine = false;
     [SerializeField] [Tooltip("Activar si es el motor derecho")]  bool rightEngine = true;
     #endregion
@@ -25,6 +27,7 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] [Tooltip("Velocidad lineal que aplica el motor")] float thrustSpeed = 10f;
     [SerializeField] [Tooltip("Torque que aplica el motor")] float torque = 10f;
     [SerializeField] [Range(0f, 1f)] [Tooltip("Porcentaje de torque mínimo que se aplica cuando el motor está en vertical")] float minTorqueApplied = 0.2f;
+    [SerializeField] float trailFadeOut = 1f;
     #endregion
 
     void Start()
@@ -58,6 +61,8 @@ public class ShipEngine : MonoBehaviour
 
             if (leftEngine)
             {
+                leftEngineTrail.time = 1f;
+
                 torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
                     / 
@@ -70,6 +75,8 @@ public class ShipEngine : MonoBehaviour
 
             else if (rightEngine)
             {
+                rightEngineTrail.time = 1f;
+
                 torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f) 
                     / 
@@ -80,6 +87,11 @@ public class ShipEngine : MonoBehaviour
                 shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
             }
                 
+        }
+        else
+        {
+            if(leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
         }
     }
 
@@ -128,5 +140,5 @@ public class ShipEngine : MonoBehaviour
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
 
-    //TO DO: Max angular and linear speed
+    //TO DO: Max angular and linear speed; Encender trails al hacer thrust; El hook se lanza cuando los dos motores pulsan el input
 }
