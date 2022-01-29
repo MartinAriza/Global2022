@@ -23,7 +23,6 @@ public class Hook : MonoBehaviour
         ropePool = new Queue<GameObject>();
 
         rb = GetComponent<Rigidbody>();
-
         
     }
 
@@ -37,7 +36,7 @@ public class Hook : MonoBehaviour
         //float movx = Input.GetAxis("Horizontal");
         //rb.velocity = new Vector3(movx * velmove, rb.velocity.y, 0);
 
-        Debug.DrawRay(transform.position, transform.position + fwd * ropeLength, Color.green);
+        Debug.DrawLine(transform.position, transform.position + transform.forward * ropeLength, Color.green);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
