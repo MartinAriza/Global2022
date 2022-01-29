@@ -15,6 +15,6 @@ public class TrasformForward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.rotation = Quaternion.LookRotation(Vector3.up, Vector3.ProjectOnPlane((cam.transform.position - transform.position).normalized, Vector3.right));
     }
 }

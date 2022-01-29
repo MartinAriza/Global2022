@@ -40,6 +40,11 @@ public class ShipEngine : MonoBehaviour
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
 
+        
+    }
+
+    private void FixedUpdate()
+    {
         if (leftEngine)
         {
             RotateEngine(90f, 180f);
@@ -49,10 +54,7 @@ public class ShipEngine : MonoBehaviour
         {
             RotateEngine(180f, 270f);
         }
-    }
 
-    private void FixedUpdate()
-    {
         if (thrustInput)
         {
             shipBody.AddForce(transform.up * thrustSpeed, ForceMode.Force);
