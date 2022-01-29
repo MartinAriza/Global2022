@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Transform target;
+    [SerializeField] float offset = -80f;
+
+    [SerializeField] float smoothTimeInDeadzone = 0.3f;
+    [SerializeField] float smoothRotation = 0.06f;
+
+    private Vector3 velocity = Vector3.zero;
+    private Camera playerCamera;
+
+    private void Start()
     {
-        
+        playerCamera = Camera.main;
+
+        Vector3 viewPos = playerCamera.WorldToViewportPoint(target.position);
+
+        Vector3 targetPosition = target.TransformPoint(new Vector3(0f, offset, 0f));
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTimeInDeadzone);
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        Vector3 viewPos = playerCamera.WorldToViewportPoint(target.position);
+
+        //Translation
+        Vector3 targetPosition = target.TransformPoint(new Vector3(0f, offset, 0f));
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTimeInDeadzone);
+
+        //Rotation
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.forward, -target.transform.forward), smoothRotation);
     }
 }

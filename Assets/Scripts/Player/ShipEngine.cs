@@ -34,8 +34,6 @@ public class ShipEngine : MonoBehaviour
 
     void Update()
     {
-
-        //Prueba git
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
 
@@ -129,4 +127,6 @@ public class ShipEngine : MonoBehaviour
         if ( (transform.localEulerAngles.y + newRotation) >= minAngle && (transform.localEulerAngles.y + newRotation) <= maxAngle)
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
+
+    //TO DO: Max angular and linear speed
 }
