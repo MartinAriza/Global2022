@@ -19,6 +19,7 @@ public class ShipEngine : MonoBehaviour
 
     bool thrustInput = false;
     bool brakeInput = false;
+    bool brakeReleaseInput = false;
     #endregion
 
 
@@ -31,6 +32,8 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] float brakeVelocitySmooothTime = 0.4f;
     [SerializeField] float brakeAngularVelocitySmoothTime = 0.4f;
     #endregion
+
+    bool firsFrameBrake = true;
 
     void Start()
     {
@@ -58,7 +61,13 @@ public class ShipEngine : MonoBehaviour
 
         if (brakeInput)
         {
-
+            if(firsFrameBrake)
+            {
+                firsFrameBrake = false;
+                Debug.Log("asdads");
+                //Spawn animation
+                //SFX
+            }
 
             Vector3 velocity = Vector3.zero;
 
@@ -112,6 +121,8 @@ public class ShipEngine : MonoBehaviour
                 if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
             }
         }
+
+        if (brakeReleaseInput) firsFrameBrake = true;
     }
 
     #region Input Management
@@ -128,7 +139,7 @@ public class ShipEngine : MonoBehaviour
 
         thrustInput = Input.GetKey(KeyCode.W);
         brakeInput = Input.GetKey(KeyCode.Space);
-
+        brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
         //Left side Gamepad Input
     }
 
@@ -144,8 +155,8 @@ public class ShipEngine : MonoBehaviour
             xAxis += 1;
 
         thrustInput = Input.GetKey(KeyCode.UpArrow);
-        brakeInput = Input.GetKey(KeyCode.Space);
-
+        //brakeInput = Input.GetKey(KeyCode.Space);
+        //brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
         //Right side Gamepad Input
     }
     #endregion
