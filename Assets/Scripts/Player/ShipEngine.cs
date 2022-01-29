@@ -90,8 +90,7 @@ public class ShipEngine : MonoBehaviour
 
             shipBody.AddTorque(-shipBody.angularVelocity * brakeAngularVelocitySmoothTime);
 
-            leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
-            rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            
         }
         else
         {
@@ -140,6 +139,13 @@ public class ShipEngine : MonoBehaviour
                 if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
             }
         }
+
+        if(brakeInput)
+        {
+            leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+        }
+            
     }
 
     #region Input Management
@@ -172,8 +178,8 @@ public class ShipEngine : MonoBehaviour
             xAxis += 1;
 
         thrustInput = Input.GetKey(KeyCode.UpArrow);
-        //brakeInput = Input.GetKey(KeyCode.Space);
-        //brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
+        brakeInput = Input.GetKey(KeyCode.Space);
+        brakeReleaseInput = Input.GetKeyUp(KeyCode.Space);
         //Right side Gamepad Input
     }
     #endregion
