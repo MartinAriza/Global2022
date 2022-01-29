@@ -517,6 +517,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipBody: {fileID: 7084640744616153927}
+  leftEngineTrail: {fileID: 8294923907740205898}
+  rightEngineTrail: {fileID: 148524803075446567}
   leftEngine: 1
   rightEngine: 0
   rotationSpeed: 1
@@ -686,6 +688,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipBody: {fileID: 7084640744616153927}
+  leftEngineTrail: {fileID: 8294923907740205898}
+  rightEngineTrail: {fileID: 148524803075446567}
   leftEngine: 0
   rightEngine: 1
   rotationSpeed: 1
