@@ -15,10 +15,14 @@ public class Parallax : MonoBehaviour
     Vector2 distance = Vector2.zero;
     Vector2 distanceFromCamera = Vector2.zero;
 
+    SpriteRenderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         spriteStartPosition = new Vector3(transform.position.x, transform.position.y, 0f);
+
         spriteSize = GetComponent<SpriteRenderer>().bounds.size;
 
         camera = Camera.main.gameObject;
@@ -29,18 +33,15 @@ public class Parallax : MonoBehaviour
     {
         distanceFromCamera = new Vector2(camera.transform.position.x, camera.transform.position.y) * (1 - parallax);
 
-        //distance = new Vector2(camera.transform.position.x, camera.transform.position.y) * parallax;
-
-        distance = new Vector2(transform.position.x - spriteStartPosition.x, transform.position.y - spriteStartPosition.y) * parallax;
+        distance = new Vector2(camera.transform.position.x, camera.transform.position.y) * parallax;
 
         transform.position = new Vector3(spriteStartPosition.x + distance.x, spriteStartPosition.y + distance.y, transform.position.z);
 
-
         //To DO Fix popping
-        if (distanceFromCamera.x > spriteStartPosition.x + spriteSize.x) spriteStartPosition.x += spriteSize.x;
-        else if (distanceFromCamera.x < spriteStartPosition.x - spriteSize.x) spriteStartPosition.x -= spriteSize.x;
-
-        if (distanceFromCamera.y > spriteStartPosition.y + spriteSize.y) spriteStartPosition.y += spriteSize.y;
-        else if (distanceFromCamera.y < spriteStartPosition.y - spriteSize.y) spriteStartPosition.y -= spriteSize.y;
+        //if (distanceFromCamera.x > spriteStartPosition.x + spriteSize.x) spriteStartPosition.x += spriteSize.x;
+        //else if (distanceFromCamera.x < spriteStartPosition.x - spriteSize.x) spriteStartPosition.x -= spriteSize.x;
+        //
+        //if (distanceFromCamera.y > spriteStartPosition.y + spriteSize.y) spriteStartPosition.y += spriteSize.y;
+        //else if (distanceFromCamera.y < spriteStartPosition.y - spriteSize.y) spriteStartPosition.y -= spriteSize.y;
     }
 }
