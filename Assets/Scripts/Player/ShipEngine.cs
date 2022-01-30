@@ -70,10 +70,10 @@ public class ShipEngine : MonoBehaviour
         if (brakeReleaseInput)
         {
             firsFrameBrake = true;
-            shipBody.angularVelocity = Vector3.zero;
-        }
 
-        Debug.Log(gameObject.name + " " + brakeInput);
+            //shipBody.angularVelocity = Vector3.zero;
+            //shipBody.velocity = Vector3.zero;
+        }
     }
 
     private void FixedUpdate()
@@ -108,12 +108,13 @@ public class ShipEngine : MonoBehaviour
                     - 2f)
                     ) + minTorqueApplied);
 
+                //Debug.Log("Left engine Torque: " + transform.forward * torque * torqueMultiplier);
 
                 if (shipBody.angularVelocity.magnitude < maxAngularVelocity)
                     shipBody.AddTorque(transform.forward * torque * torqueMultiplier, ForceMode.Force);
             }
 
-            else if (rightEngine)
+            if (rightEngine)
             {
                 rightEngineTrail.time = 1f;
 
@@ -123,6 +124,8 @@ public class ShipEngine : MonoBehaviour
                     (270f - 180f)) / (270f - 180f))
                     - 2f)
                     ) + minTorqueApplied);
+
+                //Debug.Log("Right engine Torque: " + transform.forward * torque * torqueMultiplier);
 
                 if (shipBody.angularVelocity.magnitude < maxAngularVelocity)
                     shipBody.AddTorque(-transform.forward * torque * torqueMultiplier, ForceMode.Force);
@@ -143,13 +146,12 @@ public class ShipEngine : MonoBehaviour
             //shipBody.angularVelocity = Vector3.zero;
 
             shipBody.velocity = Vector3.SmoothDamp(shipBody.velocity, Vector3.zero, ref velocity, brakeVelocitySmooothTime);
-            //
+            
             shipBody.AddTorque(-shipBody.angularVelocity * brakeAngularVelocitySmoothTime);
 
             leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
             rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
-        }
-           
+        }           
     }
 
     #region Input Management
@@ -193,7 +195,24 @@ public class ShipEngine : MonoBehaviour
         float currentRotation = transform.localEulerAngles.y;
         float newRotation = rotationSpeed * xAxis;
 
-        if ( (transform.localEulerAngles.y + newRotation) >= minAngle && (transform.localEulerAngles.y + newRotation) <= maxAngle)
+        if (rightEngine)
+        {
+
+            if (transform.localEulerAngles.y < (179f + rotationSpeed))
+            {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f + rotationSpeed, transform.localEulerAngles.z);
+            }
+        }
+
+        if (leftEngine)
+        {
+            if (transform.localEulerAngles.y > (179f - rotationSpeed))
+            {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f - rotationSpeed, transform.localEulerAngles.z);
+            }
+        }
+
+        if ( (transform.localEulerAngles.y + newRotation) > minAngle && (transform.localEulerAngles.y + newRotation) < maxAngle)
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
 
