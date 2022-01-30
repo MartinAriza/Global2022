@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayOnCrash : MonoBehaviour
 {
     [SerializeField] AudioSource crashSound;
+    [SerializeField] AudioSource crashWithPlayerSound;
+
     [SerializeField] [Range(-3,3)] float minPitch = -1f;
     [SerializeField] [Range(-3, 3)] float maxPitch = 2f;
 
@@ -12,8 +14,16 @@ public class PlayOnCrash : MonoBehaviour
     {
         if (!collision.gameObject.layer.Equals("WorldLimits"))
         {
-            crashSound.pitch = Random.Range(minPitch, maxPitch);
-            crashSound.PlayOneShot(crashSound.clip);
+            if(!collision.gameObject.tag.Equals("Ship"))
+            {
+                crashWithPlayerSound.pitch = Random.Range(minPitch, maxPitch);
+                crashWithPlayerSound.PlayOneShot(crashWithPlayerSound.clip);
+            }
+            else
+            {
+                crashSound.pitch = Random.Range(minPitch, maxPitch);
+                crashSound.PlayOneShot(crashSound.clip);
+            }
         }
     }
 }
