@@ -57,7 +57,6 @@ public class Satellite : MonoBehaviour
         
         if(other.gameObject.tag == "Ship")
         {
-            Debug.Log("Dentro");
             touching = true;
             
         }
@@ -68,7 +67,6 @@ public class Satellite : MonoBehaviour
         
         if (other.gameObject.tag == "Ship")
         {
-            Debug.Log("Fuera");
             touching = false;
 
         }

@@ -37,12 +37,12 @@ public class HammerScrewDriver : MonoBehaviour
 
         if (bar.value >= 0.9f)
         {
+            minigameFinished.Invoke();
             StopCoroutine(ChangeSprite());
             if (allActions.Length > 0)
                 action.sprite = allActions[0];
             bar.value = 0;
             Time.timeScale = 1f;
-            minigameFinished.Invoke();
             gameObject.SetActive(false);
             
         }

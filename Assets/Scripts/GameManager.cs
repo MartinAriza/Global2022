@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,14 +33,15 @@ public class GameManager : MonoBehaviour
 
     public void EndMinigame()
     {
+        Debug.Log("Un satelite menos");
         if (unfixedSatellites > 0)
         {
             unfixedSatellites--;
         }
         if (unfixedSatellites == 0)
         {
-            Debug.Log("Acabao");
-            //Call final menu or scene with credits
+            Debug.Log("Se acabo");
+            SceneManager.LoadScene("Credits");
         }
     }
 }
