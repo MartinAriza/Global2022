@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShipEngine : MonoBehaviour
 {
@@ -50,11 +51,13 @@ public class ShipEngine : MonoBehaviour
 
     void Start()
     {
-        
+        Cursor.visible = false;
     }
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape)) SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+
         if (leftEngine) getLeftEngineInput();
         else if (rightEngine) getRightEngineInput();
 
