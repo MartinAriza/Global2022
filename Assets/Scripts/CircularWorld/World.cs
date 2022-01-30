@@ -18,9 +18,7 @@ public class World : MonoBehaviour
         Vector3 direction = (worldCenter.transform.position - collisionPoint).normalized;
         RaycastHit hit;
 
-        Debug.DrawLine(collisionPoint, direction * 100f, Color.green, 10f);
-
-        if(Physics.Raycast(collisionPoint, direction, out hit, Mathf.Infinity/*, worldlLimitMask*/))
+        if(Physics.Raycast(collisionPoint, direction, out hit, Mathf.Infinity))
         {
             ship.transform.position = hit.point - direction * offset;
 
