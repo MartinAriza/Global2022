@@ -545,6 +545,7 @@ GameObject:
   - component: {fileID: 7084640744616153976}
   - component: {fileID: 7084640744616153979}
   - component: {fileID: 7084640744616153927}
+  - component: {fileID: 5572869165449446015}
   m_Layer: 2
   m_Name: Ship
   m_TagString: Ship
@@ -648,6 +649,14 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 88
   m_CollisionDetection: 0
+--- !u!81 &5572869165449446015
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7084640744616153926}
+  m_Enabled: 1
 --- !u!1 &7084640745202715559
 GameObject:
   m_ObjectHideFlags: 0
