@@ -13,6 +13,8 @@ public class HammerScrewDriver : MonoBehaviour
     bool hammer;
     bool screwdriver;
 
+    Satellite satellite;
+
     [SerializeField] UnityEvent minigameFinished;
 
     // Start is called before the first frame update
@@ -37,6 +39,7 @@ public class HammerScrewDriver : MonoBehaviour
 
         if (bar.value >= 0.9f)
         {
+            satellite.fixedSatellite();
             minigameFinished.Invoke();
             StopCoroutine(ChangeSprite());
             if (allActions.Length > 0)
@@ -93,6 +96,11 @@ public class HammerScrewDriver : MonoBehaviour
         if (allActions.Length > 0)
             action.sprite = allActions[0];
 
+    }
+
+    public void setSatellite(Satellite s)
+    {
+        satellite = s;
     }
 
 }
