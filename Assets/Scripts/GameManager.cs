@@ -33,35 +33,15 @@ public class GameManager : MonoBehaviour
         if (fixEvent)
         {
             Minigame();
-
-            switch (nGame)
-            {
-                case 0:
-                    fixEvent = panels[nGame].GetComponent<HammerScrewDriver>().getFinished();
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-            }
-        }
-        else
-        {
-            Resume();
+            fixEvent = false;
         }
 
-    }
-
-    void Resume()
-    {
-        panels[nGame].SetActive(false);
-        Time.timeScale = 1.0f;
     }
 
     void Minigame()
     {
         nGame = Random.Range(0, panels.Length);
-        //panels[nGame].gameObject.SetActive(true);
+        panels[nGame].gameObject.SetActive(true);
 
         Time.timeScale = 0f;
 

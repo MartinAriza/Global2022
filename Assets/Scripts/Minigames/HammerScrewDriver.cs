@@ -11,17 +11,16 @@ public class HammerScrewDriver : MonoBehaviour
 
     bool hammer;
     bool screwdriver;
-    bool fixing;
 
     // Start is called before the first frame update
     void Start()
     {
-        action.sprite = allActions[0];
+        if(allActions.Length > 0)
+            action.sprite = allActions[0];
         bar.value = 0;
 
         hammer = false;
         screwdriver = false;
-        fixing = true;
 
         Time.timeScale = 0f; //Luego se ha de papar desde GameManager, no desde aqui
     }
@@ -29,40 +28,63 @@ public class HammerScrewDriver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(bar.value);
+        if (bar.value >= 0.9f)
+        {
+            StopCoroutine(ChangeSprite());
+            if (allActions.Length > 0)
+                action.sprite = allActions[0];
+            bar.value = 0;
+            gameObject.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        
+
         if (Input.GetKeyDown(KeyCode.S) && (screwdriver || (!screwdriver && !hammer)))
         {
             screwdriver = false;
+            
+            if (allActions.Length > 0)
+                action.sprite = allActions[1];
 
-            action.sprite = allActions[1];
-            bar.value += 0.2f;
+            bar.value += 0.05f;
 
             hammer = true;
+
+            StopCoroutine(ChangeSprite());
+            if(gameObject.activeSelf)
+                StartCoroutine(ChangeSprite());
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && (hammer || (!screwdriver && !hammer)))
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) && (hammer || (!screwdriver && !hammer)))
         {
             hammer = false;
 
-            action.sprite = allActions[2];
-            bar.value += 0.1f;
+            if (allActions.Length > 0)
+                action.sprite = allActions[2];
+
+            bar.value += 0.05f;
 
             screwdriver = true;
-        }
-        else
-        {
-            hammer = false;
-            screwdriver = false;
 
-            action.sprite = allActions[0];
+            StopCoroutine(ChangeSprite());
+            if (gameObject.activeSelf)
+                StartCoroutine(ChangeSprite());
         }
+        
 
         if (bar.value > 0) bar.value -= 0.001f;
 
-        if (bar.value == 1) fixing = false;
-
     }
 
-    public bool getFinished()
+    IEnumerator ChangeSprite()
     {
-        return fixing;
+        
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (allActions.Length > 0)
+            action.sprite = allActions[0];
+
     }
+
 }
