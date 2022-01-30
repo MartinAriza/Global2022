@@ -17,6 +17,10 @@ public class HammerScrewDriver : MonoBehaviour
 
     [SerializeField] UnityEvent minigameFinished;
 
+    //Sound
+    [SerializeField] AudioSource hammerSound;
+    [SerializeField] AudioSource victorySound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,8 @@ public class HammerScrewDriver : MonoBehaviour
 
         if (bar.value >= 0.9f)
         {
+            victorySound.PlayOneShot(victorySound.clip);
+
             satellite.fixedSatellite();
             minigameFinished.Invoke();
             StopCoroutine(ChangeSprite());
@@ -54,7 +60,9 @@ public class HammerScrewDriver : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S) && (screwdriver || (!screwdriver && !hammer)))
         {
             screwdriver = false;
-            
+
+            hammerSound.PlayOneShot(hammerSound.clip);
+
             if (allActions.Length > 0)
                 action.sprite = allActions[1];
 
@@ -70,6 +78,8 @@ public class HammerScrewDriver : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && (hammer || (!screwdriver && !hammer)))
         {
             hammer = false;
+
+            hammerSound.PlayOneShot(hammerSound.clip);
 
             if (allActions.Length > 0)
                 action.sprite = allActions[2];
