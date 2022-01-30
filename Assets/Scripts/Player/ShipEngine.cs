@@ -44,7 +44,7 @@ public class ShipEngine : MonoBehaviour
     [SerializeField] AudioSource rightEngineAudioSource;
     [SerializeField] AudioSource leftEngineAudioSource;
 
-    [SerializeField] AudioSource constantBrake;
+    //[SerializeField] AudioSource constantBrake;
     [SerializeField] AudioSource burstBrake;
 
 
@@ -77,7 +77,7 @@ public class ShipEngine : MonoBehaviour
         if (brakeReleaseInput)
         {
             firsFrameBrake = true;
-            constantBrake.volume = 0f;
+            //constantBrake.volume = 0f;
 
             //shipBody.angularVelocity = Vector3.zero;
             //shipBody.velocity = Vector3.zero;
@@ -159,7 +159,7 @@ public class ShipEngine : MonoBehaviour
 
         if (brakeInput)
         {
-            constantBrake.volume = 1f;
+            //constantBrake.volume = 1f;
 
             Vector3 velocity = Vector3.zero;
 
