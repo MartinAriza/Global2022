@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class HammerScrewDriver : MonoBehaviour
 {
@@ -12,31 +13,38 @@ public class HammerScrewDriver : MonoBehaviour
     bool hammer;
     bool screwdriver;
 
+    [SerializeField] UnityEvent minigameFinished;
+
     // Start is called before the first frame update
     void Start()
     {
-        if(allActions.Length > 0)
+        if (minigameFinished == null)
+            minigameFinished = new UnityEvent();
+
+        if (allActions.Length > 0)
             action.sprite = allActions[0];
         bar.value = 0;
 
         hammer = false;
         screwdriver = false;
 
-        Time.timeScale = 0f; //Luego se ha de papar desde GameManager, no desde aqui
+        Time.timeScale = 0f; //Luego se ha de parar desde GameManager, no desde aqui
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(bar.value);
+
         if (bar.value >= 0.9f)
         {
             StopCoroutine(ChangeSprite());
             if (allActions.Length > 0)
                 action.sprite = allActions[0];
             bar.value = 0;
-            gameObject.SetActive(false);
             Time.timeScale = 1f;
+            minigameFinished.Invoke();
+            gameObject.SetActive(false);
+            
         }
         
 
