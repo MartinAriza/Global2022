@@ -24,7 +24,6 @@ public class ShipEngine : MonoBehaviour
     bool brakeReleaseInput = false;
     #endregion
 
-
     #region Movement variables
     [SerializeField] [Tooltip("Velocidad a la que rota el motor")] float rotationSpeed = 3f;
     [SerializeField] [Tooltip("Velocidad lineal que aplica el motor")] float thrustSpeed = 10f;
@@ -216,5 +215,10 @@ public class ShipEngine : MonoBehaviour
             transform.Rotate(new Vector3(0f, 0f, -newRotation), Space.Self);
     }
 
-    //TO DO: 
+    public void ClearTrails()
+    {
+        leftEngineTrail.Clear();
+        rightEngineTrail.Clear();
+    }
+    
 }
