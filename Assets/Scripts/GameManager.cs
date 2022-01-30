@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     public GameObject[] panels;
 
     int nGame;
-    public int unfixedSatellites = 3;
+    public int unfixedSatellites;
+
+    GameObject[] satellites;
 
 
     // Start is called before the first frame update
@@ -20,12 +22,17 @@ public class GameManager : MonoBehaviour
         {
             go.SetActive(false);
         }
+
+        satellites = GameObject.FindGameObjectsWithTag("Satellite");
+        unfixedSatellites = satellites.Length;
+        
     }
 
-    public void Minigame()
+    public void Minigame(Satellite s)
     {
         nGame = Random.Range(0, panels.Length);
         panels[nGame].gameObject.SetActive(true);
+        panels[nGame].gameObject.GetComponent<HammerScrewDriver>().setSatellite(s);
 
         Time.timeScale = 0f;
 
@@ -40,7 +47,6 @@ public class GameManager : MonoBehaviour
         }
         if (unfixedSatellites == 0)
         {
-            Debug.Log("Se acabo");
             SceneManager.LoadScene("Credits");
         }
     }

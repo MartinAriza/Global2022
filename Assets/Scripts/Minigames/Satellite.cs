@@ -15,6 +15,7 @@ public class Satellite : MonoBehaviour
     public GameObject panel;
 
     [SerializeField] UnityEvent collision;
+    [SerializeField] GameObject repairAnimation;
     
 
     // Start is called before the first frame update
@@ -40,6 +41,7 @@ public class Satellite : MonoBehaviour
         else
         {
             time = 0.0f;
+            panel.SetActive(false);
         }
 
         if (time >= maxTime)
@@ -68,7 +70,22 @@ public class Satellite : MonoBehaviour
         if (other.gameObject.tag == "Ship")
         {
             touching = false;
+            bar.value = 0;
+            bar.enabled = false;
 
         }
+    }
+
+    public void fixedSatellite()
+    {
+        gameObject.tag = "Untagged";
+        FindObjectOfType<Sonar>().UpdateSatelliteList();
+
+        foreach (ShipEngine shipEngine in FindObjectsOfType<ShipEngine>())
+        {
+            shipEngine.ClearTrails();
+        }
+
+        repairAnimation.SetActive(false);
     }
 }
