@@ -253,6 +253,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
+--- !u!1 &358828014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7776296877541883658, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+  m_PrefabInstance: {fileID: 2037173092}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &395075819
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +363,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7084640744616153926, guid: cc8d2ab8842923047939bdd7f4e87210, type: 3}
   m_PrefabInstance: {fileID: 211813621}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &863547887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+  m_PrefabInstance: {fileID: 2037173092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130038026d0a747429b135a2f3ebdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1162322159 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+  m_PrefabInstance: {fileID: 1796421303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130038026d0a747429b135a2f3ebdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1239321350
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,9 +579,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
       propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1796682943}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1162322159}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Satellite, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2839497411568080264, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
       propertyPath: m_Name
       value: Satellite (1)
@@ -741,9 +780,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: repairAnimation
+      value: 
+      objectReference: {fileID: 358828014}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
       propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1796682943}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 863547887}
+    - target: {fileID: 1877470483397403432, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
+      propertyPath: collision.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Satellite, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2839497411568080264, guid: 057d7441c8d0fa3488344c14d86efe72, type: 3}
       propertyPath: m_Name
       value: Satellite
@@ -823,7 +878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682976487723793771, guid: 6a3c0abd65322e4408c768c55f6f8e84, type: 3}
       propertyPath: minigameFinished.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1682976487723793771, guid: 6a3c0abd65322e4408c768c55f6f8e84, type: 3}
       propertyPath: minigameFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

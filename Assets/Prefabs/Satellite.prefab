@@ -223,6 +223,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  repairAnimation: {fileID: 7776296877541883658}
 --- !u!95 &5230010838867462135
 Animator:
   serializedVersion: 3
