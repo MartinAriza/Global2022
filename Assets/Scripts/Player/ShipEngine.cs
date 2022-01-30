@@ -41,9 +41,16 @@ public class ShipEngine : MonoBehaviour
 
     bool firsFrameBrake = true;
 
+    [SerializeField] AudioSource rightEngineAudioSource;
+    [SerializeField] AudioSource leftEngineAudioSource;
+
+    [SerializeField] AudioSource constantBrake;
+    [SerializeField] AudioSource burstBrake;
+
+
     void Start()
     {
-
+        
     }
 
     void Update()
@@ -63,12 +70,14 @@ public class ShipEngine : MonoBehaviour
                 brakeAnim.GetComponent<Animator>().Play("Brakes");
 
                 //BrakeSFX
+                burstBrake.PlayOneShot(burstBrake.clip);
             }
         }
 
         if (brakeReleaseInput)
         {
             firsFrameBrake = true;
+            constantBrake.volume = 0f;
 
             //shipBody.angularVelocity = Vector3.zero;
             //shipBody.velocity = Vector3.zero;
@@ -99,6 +108,7 @@ public class ShipEngine : MonoBehaviour
             if (leftEngine)
             {
                 leftEngineTrail.time = 1f;
+                leftEngineAudioSource.volume = 1f;
 
                 torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(90f, 180f, (transform.localEulerAngles.y - 90f)
@@ -116,6 +126,7 @@ public class ShipEngine : MonoBehaviour
             if (rightEngine)
             {
                 rightEngineTrail.time = 1f;
+                rightEngineAudioSource.volume = 1f;
 
                 torqueMultiplier = Mathf.Clamp01(Mathf.Abs(
                     ((Mathf.Lerp(180f, 270f, (transform.localEulerAngles.y - 180f)
@@ -132,13 +143,24 @@ public class ShipEngine : MonoBehaviour
         }
         else
         {
-            if (leftEngine) leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
-            if (rightEngine) rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            if (leftEngine)
+            {
+                leftEngineAudioSource.volume = Mathf.Lerp(leftEngineAudioSource.volume, 0f, Time.deltaTime * trailFadeOut);
+                leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            }
+
+            if (rightEngine)
+            {
+                rightEngineAudioSource.volume = Mathf.Lerp(rightEngineAudioSource.volume, 0f, Time.deltaTime * trailFadeOut);
+                rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
+            }
         }
         
 
         if (brakeInput)
         {
+            constantBrake.volume = 1f;
+
             Vector3 velocity = Vector3.zero;
 
             //shipBody.velocity = Vector3.zero;
@@ -147,6 +169,9 @@ public class ShipEngine : MonoBehaviour
             shipBody.velocity = Vector3.SmoothDamp(shipBody.velocity, Vector3.zero, ref velocity, brakeVelocitySmooothTime);
             
             shipBody.AddTorque(-shipBody.angularVelocity * brakeAngularVelocitySmoothTime);
+
+            leftEngineAudioSource.volume = Mathf.Lerp(leftEngineAudioSource.volume, 0f, Time.deltaTime * trailFadeOut);
+            rightEngineAudioSource.volume = Mathf.Lerp(rightEngineAudioSource.volume, 0f, Time.deltaTime * trailFadeOut);
 
             leftEngineTrail.time = Mathf.Lerp(leftEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
             rightEngineTrail.time = Mathf.Lerp(rightEngineTrail.time, 0f, Time.deltaTime * trailFadeOut);
