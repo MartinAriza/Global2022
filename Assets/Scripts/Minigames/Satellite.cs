@@ -16,7 +16,9 @@ public class Satellite : MonoBehaviour
 
     [SerializeField] UnityEvent collision;
     [SerializeField] GameObject repairAnimation;
-    
+
+    [SerializeField] AudioSource sonarSound;
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,8 @@ public class Satellite : MonoBehaviour
         
         if(other.gameObject.tag == "Ship")
         {
+            if (!isFixed)
+                sonarSound.PlayOneShot(sonarSound.clip);
             touching = true;
             
         }
