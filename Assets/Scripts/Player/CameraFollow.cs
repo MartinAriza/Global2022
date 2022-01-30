@@ -13,8 +13,6 @@ public class CameraFollow : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Camera playerCamera;
 
-
-
     private void Start()
     {
         playerCamera = Camera.main;
@@ -35,5 +33,10 @@ public class CameraFollow : MonoBehaviour
 
         //Rotation
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.forward, -target.transform.forward), smoothRotation);
+    }
+
+    public void InstantTransport()
+    {
+        transform.position = target.TransformPoint(new Vector3(0f, offset, 0f));
     }
 }
