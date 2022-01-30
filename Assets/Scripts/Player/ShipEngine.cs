@@ -244,6 +244,9 @@ public class ShipEngine : MonoBehaviour
     {
         leftEngineTrail.Clear();
         rightEngineTrail.Clear();
+
+        leftEngineAudioSource.volume = 0f;
+        rightEngineAudioSource.volume = 0f;
     }
     
 }
