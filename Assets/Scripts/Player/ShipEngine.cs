@@ -248,5 +248,99 @@ public class ShipEngine : MonoBehaviour
         leftEngineAudioSource.volume = 0f;
         rightEngineAudioSource.volume = 0f;
     }
+
+    /*
+    Vector3[] leftTrailPosition;
+    Vector3[] rightTrailPosition;
+
+    Vector3[] newLeftTrailPosition;
+    Vector3[] newRightTrailPosition;
+
+    public void TransportTrails(bool beforeTransport, Vector3 hitPoint, Vector3 direction, float offset)
+    {
+        //leftEngineTrail.Clear();
+        //rightEngineTrail.Clear();
+
+        if(beforeTransport)
+        {
+            //leftEngineTrail.Clear();
+            //rightEngineTrail.Clear();
+
+            leftTrailPosition = new Vector3[leftEngineTrail.positionCount];
+            rightTrailPosition = new Vector3[rightEngineTrail.positionCount];
+
+            newLeftTrailPosition = new Vector3[leftEngineTrail.positionCount - 1];
+            newRightTrailPosition = new Vector3[rightEngineTrail.positionCount - 1];
+
+            leftEngineAudioSource.volume = 0f;
+            rightEngineAudioSource.volume = 0f;
+
+            leftEngineTrail.emitting = false;
+            rightEngineTrail.emitting = false;
+
+            leftEngineTrail.GetPositions(leftTrailPosition);
+            rightEngineTrail.GetPositions(rightTrailPosition);
+
+            foreach (Vector3 position in rightTrailPosition)
+                Debug.Log(position);
+
+            for(int i = 0; i < rightTrailPosition.Length; i++)
+            {
+                if (i != 0)
+                    Debug.Log(rightTrailPosition[i].y - rightTrailPosition[i - 1].y);
+            }
+
+            leftEngineTrail.Clear();
+            rightEngineTrail.Clear();
+        }
+        else
+        {
+            //leftEngineAudioSource.volume = 0f;
+            //rightEngineAudioSource.volume = 0f;
+
+            leftEngineTrail.Clear();
+            rightEngineTrail.Clear();
+
+            for (int i = 0; i < (leftTrailPosition.Length - 1); i++)
+            {
+                Vector3 vertexDistanceOffset = Vector3.zero;
+
+                if (i == 0)
+                {
+                    newLeftTrailPosition[i] = leftEngineTrail.transform.position;
+                }
+                else
+                {
+                    vertexDistanceOffset =  (leftTrailPosition[i - 1] - leftTrailPosition[i]);
+
+                    newLeftTrailPosition[i].x = leftEngineTrail.transform.position.x - i * leftEngineTrail.minVertexDistance * 10f * direction.x * vertexDistanceOffset.x;
+                    newLeftTrailPosition[i].y = leftEngineTrail.transform.position.y - i * leftEngineTrail.minVertexDistance * 10f * direction.y * vertexDistanceOffset.y;
+                }
+            }
+            for (int i = 0; i < (rightTrailPosition.Length - 1); i++)
+            {
+                Vector3 vertexDistanceOffset = Vector3.zero;
+
+                if(i == 0)
+                {
+                    newRightTrailPosition[i] = rightEngineTrail.transform.position;
+                }
+                else
+                {
+                    vertexDistanceOffset =  (rightTrailPosition[i - 1] - rightTrailPosition[i]);
+
+                    newRightTrailPosition[i].x = rightEngineTrail.transform.position.x - i * rightEngineTrail.minVertexDistance * 10f * direction.x * vertexDistanceOffset.x;
+                    newRightTrailPosition[i].y = rightEngineTrail.transform.position.y - i * rightEngineTrail.minVertexDistance * 10f * direction.y * vertexDistanceOffset.y;
+                }
+            }
+
+            leftEngineTrail.AddPositions(newLeftTrailPosition);
+            rightEngineTrail.AddPositions(newRightTrailPosition);
+
+            leftEngineTrail.emitting = true;
+            rightEngineTrail.emitting = true;
+        }
+
+    }*/
     
 }

@@ -22,11 +22,14 @@ public class World : MonoBehaviour
         {
             ship.transform.position = hit.point - direction * offset;
 
-            leftEngine.ClearTrails();
-            
-            playerCamera.InstantTransport();
+            //leftEngine.TransportTrails(true, hit.point, direction, offset);
 
             leftEngine.ClearTrails();
+
+            playerCamera.InstantTransport();
+
+            rightEngine.ClearTrails();
+            //leftEngine.TransportTrails(false, hit.point, direction, offset);
         }
     }
 }
