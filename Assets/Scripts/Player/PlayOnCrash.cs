@@ -14,7 +14,7 @@ public class PlayOnCrash : MonoBehaviour
     {
         if (!collision.gameObject.layer.Equals("WorldLimits"))
         {
-            if(!collision.gameObject.tag.Equals("Ship"))
+            if(collision.gameObject.tag.Equals("Ship"))
             {
                 crashWithPlayerSound.pitch = Random.Range(minPitch, maxPitch);
                 crashWithPlayerSound.PlayOneShot(crashWithPlayerSound.clip);
